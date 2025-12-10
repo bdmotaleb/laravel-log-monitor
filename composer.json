@@ -1,5 +1,5 @@
 {
-    "name": "laravel-log-monitor/log-monitor",
+    "name": "bdmotaleb/laravel-log-monitor",
     "description": "Real-time Laravel log monitoring with Telegram alerts",
     "type": "library",
     "license": "MIT",
