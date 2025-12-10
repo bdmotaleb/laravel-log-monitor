@@ -1,0 +1,50 @@
+{
+    "name": "laravel-log-monitor/log-monitor",
+    "description": "Real-time Laravel log monitoring with Telegram alerts",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "bdmotaleb",
+            "email": "bdmotaleb33@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/bdmotaleb/laravel-log-monitor",
+    "support": {
+        "issues": "https://github.com/bdmotaleb/laravel-log-monitor/issues",
+        "source": "https://github.com/bdmotaleb/laravel-log-monitor"
+    },
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "^10.0",
+        "illuminate/console": "^10.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelLogMonitor\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelLogMonitor\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelLogMonitor\\LogMonitorServiceProvider"
+            ],
+            "aliases": {
+                "LogMonitor": "LaravelLogMonitor\\Facades\\LogMonitor"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+
