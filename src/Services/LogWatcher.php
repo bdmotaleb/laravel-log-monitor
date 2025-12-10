@@ -72,6 +72,30 @@ class LogWatcher
     }
 
     /**
+     * Process existing log entries in the current log file.
+     */
+    public function processExistingLogs(): void
+    {
+        $logPath = $this->getLogPath();
+        $logFile = $this->getCurrentLogFile($logPath);
+
+        if (!file_exists($logFile)) {
+            return;
+        }
+
+        $handle = fopen($logFile, 'r');
+        if (!$handle) {
+            return;
+        }
+
+        while (($line = fgets($handle)) !== false) {
+            $this->processLine($line);
+        }
+
+        fclose($handle);
+    }
+
+    /**
      * Get the log directory path.
      */
     protected function getLogPath(): string
