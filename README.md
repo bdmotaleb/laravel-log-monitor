@@ -85,6 +85,14 @@ php artisan log-monitor:watch
 
 This will continuously monitor your log files and send alerts when configured log levels are detected.
 
+**Note:** By default, the watcher only processes **new** log entries added after it starts. To process existing log entries on startup, use:
+
+```bash
+php artisan log-monitor:watch --process-existing
+```
+
+This is useful when you first start the monitor or want to catch up on recent logs.
+
 ### Running as a Daemon
 
 For production, you should run this as a daemon or use a process manager like Supervisor.
@@ -103,6 +111,8 @@ user=www-data
 redirect_stderr=true
 stdout_logfile=/path/to/your/project/storage/logs/log-monitor.log
 ```
+
+**Note:** For production, don't use `--process-existing` in Supervisor as it will process all logs every time the service restarts. Only use it manually when you need to catch up on existing logs.
 
 Then reload Supervisor:
 
@@ -143,6 +153,9 @@ sudo systemctl start laravel-log-monitor
 ## Command Options
 
 ```bash
+# Process existing logs on startup (then continue monitoring)
+php artisan log-monitor:watch --process-existing
+
 # Run once and exit (useful for testing)
 php artisan log-monitor:watch --once
 
