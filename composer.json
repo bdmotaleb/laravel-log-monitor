@@ -14,6 +14,12 @@
         "issues": "https://github.com/bdmotaleb/laravel-log-monitor/issues",
         "source": "https://github.com/bdmotaleb/laravel-log-monitor"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/bdmotaleb/laravel-log-monitor"
+        }
+    ],
     "require": {
         "php": "^7.4",
         "illuminate/support": "^10.0",
