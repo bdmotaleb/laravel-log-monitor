@@ -65,9 +65,13 @@ class LogMonitorWatchCommand extends Command
                 $this->info('Processing existing log entries...');
                 $watcher->processExistingLogs();
                 $this->info('Now monitoring for new entries...');
+            } else {
+                $this->info('Monitoring for new log entries only...');
+                $this->info('(Use --process-existing to process existing logs)');
             }
 
             // Continuous monitoring
+            $this->info('Watching log files...');
             $watcher->watch();
         } catch (\Exception $e) {
             $this->error('Error: ' . $e->getMessage());

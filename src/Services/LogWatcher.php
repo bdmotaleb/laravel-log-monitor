@@ -43,6 +43,11 @@ class LogWatcher
                 $this->switchLogFile($logFile);
             }
 
+            // Try to open file if it doesn't exist yet (file might have been created)
+            if (!$this->fileHandle && file_exists($logFile)) {
+                $this->switchLogFile($logFile);
+            }
+
             if ($this->fileHandle) {
                 $this->readNewLines();
             }
@@ -139,12 +144,14 @@ class LogWatcher
     {
         $this->closeFile();
 
+        // Always set current log file, even if it doesn't exist yet
+        $this->currentLogFile = $logFile;
+
         if (file_exists($logFile)) {
-            $this->currentLogFile = $logFile;
             $this->fileHandle = fopen($logFile, 'r');
 
             if ($this->fileHandle) {
-                // Move to end of file
+                // Move to end of file to only read new entries
                 fseek($this->fileHandle, 0, SEEK_END);
             }
         }
@@ -159,8 +166,17 @@ class LogWatcher
             return;
         }
 
-        while (($line = fgets($this->fileHandle)) !== false) {
-            $this->processLine($line);
+        // Clear EOF flag if file has grown
+        clearstatcache(false, $this->currentLogFile);
+        $currentSize = filesize($this->currentLogFile);
+        $handlePosition = ftell($this->fileHandle);
+
+        // If file has grown, read new content
+        if ($currentSize > $handlePosition) {
+            // Read until EOF
+            while (($line = fgets($this->fileHandle)) !== false) {
+                $this->processLine($line);
+            }
         }
     }
 
